@@ -76,6 +76,8 @@ class SheffessionsCog(commands.Cog, name="Sheffessions"):
 
         loading_message = await ctx.send("Loading Sheffessions")
 
+        new_sheffessions = 0
+
         for index, post in enumerate(get_posts(SHEFFESSIONS_PAGE, pages=1000)):
             if not (index % 5):
                 await loading_message.edit(
@@ -105,11 +107,12 @@ class SheffessionsCog(commands.Cog, name="Sheffessions"):
 
             try:
                 sheffession.save()
+                new_sheffessions += 1
             except orator.exceptions.query.QueryException:
                 pass
 
         await loading_message.delete()
-        await ctx.send("Loaded all sheffessions")
+        await ctx.send(f"Loaded {new_sheffessions} sheffessions")
 
     @tasks.loop(seconds=60.0)
     async def post_daemon(self):
