@@ -4,3 +4,4 @@ from .message import Message
 from .poll import Poll
 from .poll_choice import PollChoice
 from .user import User
+from .sheffession import Sheffession
